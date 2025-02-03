@@ -1,3 +1,4 @@
+<h1><b>eQSL.cc Downloader</b></h1>
 
 This program allows to download eQSL pictures from eQSL.cc to your local drive.
 
@@ -7,7 +8,11 @@ Multiple callsigns are possible.
 
 Usage is quiet straightforward but I could work some more instructions if requiere. Feel free to reach me with any question or any suggestion.
 
-To download follow the Releases link on the right side.
+<h2>Downloading</h2>
+
+To download follow the <b>Releases</b> link on the right side.
+
+<h2>Donations</h2>
 
 If you like my work, please consider buying me a coffee
 
