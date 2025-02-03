@@ -165,7 +165,7 @@
   <ItemGroup>
     <Content Include="ChangeLog.txt" />
     <Content Include="InnoSetup\eQSL_Inno_Setup.iss" />
-    <Content Include="InnoSetup\Output\eQSL Downloader Setup.exe" />
+    <Content Include="InnoSetup\Output\eQSLDownloaderSetup.exe" />
     <Content Include="LICENSE.txt" />
     <Content Include="Resources\eQsl_16.ico" />
     <Content Include="Resources\eQsl_24.ico" />
@@ -185,6 +185,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
