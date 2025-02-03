@@ -38,6 +38,7 @@ Partial Class Form1
         Me.btnExit = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.calTo = New System.Windows.Forms.MonthCalendar()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.rbNew = New System.Windows.Forms.RadioButton()
         Me.rbAll = New System.Windows.Forms.RadioButton()
@@ -46,6 +47,7 @@ Partial Class Form1
         Me.btnPrevious = New System.Windows.Forms.Button()
         Me.btnNext = New System.Windows.Forms.Button()
         Me.btnLast = New System.Windows.Forms.Button()
+        Me.calFrom = New System.Windows.Forms.MonthCalendar()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnShowList = New System.Windows.Forms.Button()
@@ -59,8 +61,7 @@ Partial Class Form1
         Me.txtbDateFrom = New System.Windows.Forms.MaskedTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.calFrom = New System.Windows.Forms.MonthCalendar()
-        Me.calTo = New System.Windows.Forms.MonthCalendar()
+        Me.btnExplorer = New System.Windows.Forms.Button()
         Me.StatusStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -108,6 +109,7 @@ Partial Class Form1
         Me.txtbCallsign.Name = "txtbCallsign"
         Me.txtbCallsign.Size = New System.Drawing.Size(102, 26)
         Me.txtbCallsign.TabIndex = 2
+        Me.ToolTip1.SetToolTip(Me.txtbCallsign, "Write a new callsign")
         '
         'txtbPassword
         '
@@ -132,10 +134,10 @@ Partial Class Form1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsslStatus, Me.tsslCounter, Me.tsslProgress})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 465)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 475)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(2, 0, 21, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(802, 32)
+        Me.StatusStrip1.Size = New System.Drawing.Size(895, 32)
         Me.StatusStrip1.TabIndex = 5
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -165,16 +167,19 @@ Partial Class Form1
         Me.btnBrowse.Size = New System.Drawing.Size(90, 35)
         Me.btnBrowse.TabIndex = 6
         Me.btnBrowse.Text = "Browse >"
+        Me.ToolTip1.SetToolTip(Me.btnBrowse, "Open browsing panel to the right")
         Me.btnBrowse.UseVisualStyleBackColor = True
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(164, 408)
+        Me.btnExit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnExit.Location = New System.Drawing.Point(159, 428)
         Me.btnExit.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(72, 35)
         Me.btnExit.TabIndex = 7
         Me.btnExit.Text = "Exit"
+        Me.ToolTip1.SetToolTip(Me.btnExit, "Exit program")
         Me.btnExit.UseVisualStyleBackColor = True
         '
         'Panel1
@@ -191,7 +196,7 @@ Partial Class Form1
         Me.Panel1.Location = New System.Drawing.Point(244, 18)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(538, 451)
+        Me.Panel1.Size = New System.Drawing.Size(631, 461)
         Me.Panel1.TabIndex = 8
         Me.Panel1.Visible = False
         '
@@ -201,10 +206,18 @@ Partial Class Form1
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(534, 398)
+        Me.PictureBox1.Size = New System.Drawing.Size(627, 408)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.PictureBox1.TabIndex = 4
         Me.PictureBox1.TabStop = False
+        '
+        'calTo
+        '
+        Me.calTo.Location = New System.Drawing.Point(164, 59)
+        Me.calTo.Margin = New System.Windows.Forms.Padding(14)
+        Me.calTo.Name = "calTo"
+        Me.calTo.TabIndex = 10
+        Me.calTo.Visible = False
         '
         'Panel2
         '
@@ -216,10 +229,10 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.btnNext)
         Me.Panel2.Controls.Add(Me.btnLast)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel2.Location = New System.Drawing.Point(0, 398)
+        Me.Panel2.Location = New System.Drawing.Point(0, 408)
         Me.Panel2.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(534, 49)
+        Me.Panel2.Size = New System.Drawing.Size(627, 49)
         Me.Panel2.TabIndex = 5
         Me.ToolTip1.SetToolTip(Me.Panel2, "Alphanumeric, left arrow, right arrow," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "home and end keys to navigate")
         '
@@ -297,7 +310,7 @@ Partial Class Form1
         Me.btnNext.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnNext.AutoSize = True
         Me.btnNext.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.btnNext.Location = New System.Drawing.Point(449, 10)
+        Me.btnNext.Location = New System.Drawing.Point(542, 10)
         Me.btnNext.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnNext.Name = "btnNext"
         Me.btnNext.Size = New System.Drawing.Size(28, 30)
@@ -311,7 +324,7 @@ Partial Class Form1
         Me.btnLast.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnLast.AutoSize = True
         Me.btnLast.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.btnLast.Location = New System.Drawing.Point(493, 10)
+        Me.btnLast.Location = New System.Drawing.Point(586, 10)
         Me.btnLast.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.btnLast.Name = "btnLast"
         Me.btnLast.Size = New System.Drawing.Size(37, 30)
@@ -320,14 +333,25 @@ Partial Class Form1
         Me.ToolTip1.SetToolTip(Me.btnLast, "End")
         Me.btnLast.UseVisualStyleBackColor = True
         '
+        'calFrom
+        '
+        Me.calFrom.Location = New System.Drawing.Point(-19, 180)
+        Me.calFrom.Margin = New System.Windows.Forms.Padding(14)
+        Me.calFrom.Name = "calFrom"
+        Me.calFrom.ShowWeekNumbers = True
+        Me.calFrom.TabIndex = 4
+        Me.calFrom.Visible = False
+        '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(18, 408)
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(18, 424)
         Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(80, 35)
         Me.Button1.TabIndex = 6
         Me.Button1.Text = "Help..."
+        Me.ToolTip1.SetToolTip(Me.Button1, "Help")
         Me.Button1.UseVisualStyleBackColor = True
         '
         'btnShowList
@@ -466,22 +490,16 @@ Partial Class Form1
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "From"
         '
-        'calFrom
+        'btnExplorer
         '
-        Me.calFrom.Location = New System.Drawing.Point(-19, 180)
-        Me.calFrom.Margin = New System.Windows.Forms.Padding(14, 14, 14, 14)
-        Me.calFrom.Name = "calFrom"
-        Me.calFrom.ShowWeekNumbers = True
-        Me.calFrom.TabIndex = 4
-        Me.calFrom.Visible = False
-        '
-        'calTo
-        '
-        Me.calTo.Location = New System.Drawing.Point(164, 59)
-        Me.calTo.Margin = New System.Windows.Forms.Padding(14, 14, 14, 14)
-        Me.calTo.Name = "calTo"
-        Me.calTo.TabIndex = 10
-        Me.calTo.Visible = False
+        Me.btnExplorer.Location = New System.Drawing.Point(146, 383)
+        Me.btnExplorer.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.btnExplorer.Name = "btnExplorer"
+        Me.btnExplorer.Size = New System.Drawing.Size(90, 35)
+        Me.btnExplorer.TabIndex = 6
+        Me.btnExplorer.Text = "Explore..."
+        Me.ToolTip1.SetToolTip(Me.btnExplorer, "Explore <callsign> folder")
+        Me.btnExplorer.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -489,7 +507,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(802, 497)
+        Me.ClientSize = New System.Drawing.Size(895, 507)
         Me.Controls.Add(Me.chkbSaveLogs)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.ListBox1)
@@ -497,6 +515,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnExit)
+        Me.Controls.Add(Me.btnExplorer)
         Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.btnDowload)
@@ -563,5 +582,5 @@ Partial Class Form1
     Friend WithEvents calFrom As System.Windows.Forms.MonthCalendar
     Friend WithEvents calTo As System.Windows.Forms.MonthCalendar
     Friend WithEvents chkbSaveLogs As System.Windows.Forms.CheckBox
-
+    Friend WithEvents btnExplorer As Button
 End Class

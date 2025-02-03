@@ -1,0 +1,9 @@
+eQSLcc Downloader ChangeLog
+
+2.50 - 01/Feb/2025
+	- Recompile for newest Visual Studio.
+	- New setup program (Inno Setup).
+
+2.51 - 03/Feb/2025
+	- Fixed bug that crashed when trying to browse a callsigh without attemptin a download.
+	- Added button to open the folder where the QSLs are saved.

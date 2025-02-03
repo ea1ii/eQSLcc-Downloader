@@ -142,8 +142,8 @@ Public Class Form1
         tsslStatus.Text = "Log req"
         Me.Refresh()
 
-        Dim logreq As String = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm" & _
-                "?UserName=" & Escaped(txtbCallsign.Text) & _
+        Dim logreq As String = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm" &
+                "?UserName=" & Escaped(txtbCallsign.Text) &
                 "&Password=" & txtbPassword.Text & "&ConfirmedOnly=1"
         If System.IO.File.Exists(callSignPath & "/last.txt") And chkbFullRange.Checked Then
             Try
@@ -330,23 +330,17 @@ Public Class Form1
                         If str IsNot Nothing Then str.Close()
                     End Try
                 Else
-                    If logreqtxt.Contains("You have no log entries") Then
+                    If logreqtxt.Contains("You are not yet logged in") Then
+                        MsgBox("Please input your password to be able to download", MsgBoxStyle.Exclamation Or MsgBoxStyle.OkOnly, "Warning")
+                    ElseIf logreqtxt.Contains("You have no log entries") Then
                         MsgBox("Now new entries in log", MsgBoxStyle.Information Or MsgBoxStyle.OkOnly, "Information")
                     Else
                         MsgBox("Log creation error", MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, "Error")
                     End If
-
-
-
                 End If
-
-
-
-
-
             Else
-                MsgBox("Log request contain errors" & vbCr & "(Try using date range).", MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, "Error")
-              
+                MsgBox("Log request contain errors" & vbCr & "(Try using date range" & vbCr & "or a correct callsing).", MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, "Error")
+
 
             End If
         Catch ex As Exception
@@ -504,8 +498,8 @@ Public Class Form1
                     currPic = grPaths.Count - 1
                     picLoad()
                 Case Else
-                    If (e.KeyValue >= Keys.A And e.KeyValue <= Keys.Z) Or _
-                            (e.KeyValue >= Keys.D0 And e.KeyValue <= Keys.D9) Or _
+                    If (e.KeyValue >= Keys.A And e.KeyValue <= Keys.Z) Or
+                            (e.KeyValue >= Keys.D0 And e.KeyValue <= Keys.D9) Or
                             (e.KeyValue >= Keys.NumPad0 And e.KeyValue <= Keys.NumPad9) Then
                         Dim v As Integer = e.KeyValue
                         If v >= Keys.NumPad0 And v <= Keys.NumPad9 Then v = v - Keys.NumPad0 + Keys.D0
@@ -526,7 +520,9 @@ Public Class Form1
     End Sub
 
     Private Sub btnShowList_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnShowList.Click
-        lbPopulate()
+        If lastDown.Count = 0 Then
+            lbPopulate()
+        End If
         ListBox1.Visible = True
         ListBox1.Focus()
     End Sub
@@ -542,6 +538,7 @@ Public Class Form1
                 s = s.Substring(s.IndexOf("\") + 1)
             End While
             ListBox1.Items.Add(s.Replace("_", "/"))
+            lastDown.Add(s.Replace("_", "/"), New System.Collections.Generic.List(Of String))
         Next
     End Sub
 
@@ -623,6 +620,14 @@ Public Class Form1
             txtbDateTo.Text = calTo.SelectionStart.ToString("dd/MM/yyyy")
             RestoreDates()
             calTo.Visible = False
+        End If
+    End Sub
+
+    Private Sub btnExplorer_Click(sender As Object, e As EventArgs) Handles btnExplorer.Click
+        If Not System.IO.Directory.Exists(callSignPath) Then
+            MsgBox("No folder exists for" & vbCr & txtbCallsign.Text, MsgBoxStyle.Critical Or MsgBoxStyle.OkOnly, "Error")
+        Else
+            Shell("explorer.exe " & callSignPath, AppWinStyle.NormalFocus)
         End If
     End Sub
 End Class
