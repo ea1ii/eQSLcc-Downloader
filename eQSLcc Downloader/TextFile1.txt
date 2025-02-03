@@ -1,0 +1,99 @@
+﻿http://www.eqsl.cc/qslcard/downloadedfiles/EA1II.adi
+
+
+                           eQSL Graphic Retrieval Program
+                                    03 June 2009
+                           Latest revision 03 December 2012
+                     Any questions or problems may be directed to
+                        Dave Morris, N5UP, Webmaster@eqsl.cc
+
+SYNOPSIS
+========
+Responding to increasing demand for a mechanism by which loggers can retrieve the graphical
+image of an eQSL "card" on request from its recipient, we have created this GeteQSL.cfm program.
+
+The old technique that some programmers had discovered (using the DisplayQSL.cfm program)
+was not secure and not designed to be called from outside the system. We had to do something.
+
+The new GeteQSL.cfm program can be accessed by doing a simple HTTP POST or GET from any
+program written in a modern development language that can use HTTP. When the required parameters
+have been specified correctly, the program returns a page containing the URL where the graphical
+eQSL "card" can be retrieved.
+
+You can retrieve eQSLs sent to a user whose Callsign and Password are known, when that eQSL is either
+in the InBox or in the Archive, but none which have already been rejected by the recipient.
+
+CAUTION
+=======
+Graphics for eQSLs are generated on-the-fly, i.e. at the time they are requested. This is a
+processor-intensive task that has the potential to slow down the entire system.  Please limit your
+use of the GeteQSL.cfm program to individual eQSLs at a speed of less than 6 per minute.
+
+Do not use huge number of simultaneous threads, as this will eventually max out our web server and
+shut other users out of the system.  Do not mass-download entire Inboxes full of eQSL graphics.
+
+Please also implement a mechanism for determining whether you have already downloaded any given eQSL,
+and refrain from downloading the same eQSL over and over.
+
+We are providing GeteQSL.cfm as a courtesy to logger publishers, but if it starts interfering with
+our system speed, we will be forced to implement throttles to protect our users. We log every use
+of the GeteQSL.cfm program and the webmaster has real-time monitors tracking its use versus processor
+utilization.
+
+HOW TO USE THE "GeteQSL.cfm" PROGRAM
+====================================
+The URL is http://www.eqsl.cc/qslcard/GeteQSL.cfm (case insensitive)
+
+The following parameters are required:
+  Username        The callsign of the recipient of the eQSL
+  Password        The password of the user's account
+  CallsignFrom    The callsign of the sender of the eQSL
+  QSOYear         YYYY OR YY format date of the QSO
+  QSOMonth        MM format
+  QSODay          DD format
+  QSOHour         HH format (24-hour time)
+  QSOMinute       MM format
+  QSOBand         20m, 80M, 70cm, etc. (case insensitive)
+  QSOMode         Must match exactly and should be an ADIF-compatible mode
+
+Parameters may be included in the URL as shown below in the TEST PROCEDURE, or may be
+included internally in the HTTP command in a set of form parameters.  (If slashes are used
+in a callsign or a date in the URL method of submission, they MUST be escaped properly.)
+
+Date/Time must match the desired eQSL to within plus or minus 5 minutes of the time stored in the eQSL.
+Mode must match exactly, unless you specify a submode of JT65 (for instance JT65A) or JT9 (for instance JT9-1), in which case the major mode will be used to search for a match (JT65 or JT9 respectively).
+
+RETURN PAGE FORMAT:
+===================
+The returned page will contain various amounts of text, due to the fact that we are using
+internal subroutines that often generate HTML comments.
+
+The easiest way to parse the returned page is
+1. Search for the string "Error:" and if found, display the entire page to determine
+the source of the error and correct it before continuing
+
+2. If no error was found, search for the string "<IMG SRC=" and then use the following text
+string that will be comma-delimited as the relative URL pointing to the location of the eQSL
+graphic in a temporary file folder.  Download that file within the next few hours as it will
+be automatically purged periodically.
+ 
+Here is a list of all the error messages:
+
+     Error: You must specify the QSO Date/Time as QSOYear, QSOMonth, QSODay, QSOHour, and QSOMinute
+     Error: No match on Username/Password for that QSO Date/Time
+     Error: (n) overlapping accounts for that QSO Date/Time. User needs to correct that immediately
+     Error: I cannot find that log entry
+     Error: That QSO has been Rejected by (username)
+
+
+TEST PROCEDURE
+==============
+You can test the proper operation of your calling program and retrieval of an eQSL by looking
+at an eQSL in your Archive and then specifying the parameters something like this:
+
+http://www.eqsl.cc/qslcard/GeteQSL.cfm?Username=mycall&Password=mypassword&CallsignFrom=sendercall&QSOBand=20M&QSOMode=SSB&QSOYear=2009&QSOMonth=6&QSODay=1&QSOHour=07&QSOMinute=30
+
+
+MODIFICATION HISTORY
+====================
+03Dec2012 Formerly, the time had to match to within the same minute, or it would take the hour and look for a match from minute 00 to minute 59. This has been changed to allow wrapping around not only hours, but also days, plus or minute 5 minutes of tolerance. Also, match on JT65 or JT9 and not on the submode of those.
