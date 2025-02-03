@@ -6,7 +6,7 @@ Only the unloaded pics will be downloaded on each session.
 
 Multiple callsigns are possible.
 
-Usage is quiet straightforward but I could work some more instructions if requiere. Feel free to reach me with any question or any suggestion.
+Usage is quite straightforward but I could work some more instructions if requiered. Feel free to reach me with any question or any suggestion.
 
 <h2>Downloading</h2>
 
